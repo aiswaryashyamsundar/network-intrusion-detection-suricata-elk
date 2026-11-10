@@ -11,7 +11,7 @@ I built a three-VM intrusion detection environment to monitor network traffic, d
 - **VM-3** - ELK stack (Elasticsearch + Kibana)
 - **Pipeline:** Suricata detects → Filebeat ships logs → Elasticsearch indexes → Kibana visualizes
 
-- ```mermaid
+```mermaid
 flowchart LR
     subgraph VM2["VM-2 - Traffic Generator"]
         A["Nmap scans<br/>hping3 SYN flood<br/>normal traffic (ping, SSH)"]
