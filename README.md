@@ -11,6 +11,28 @@ I built a three-VM intrusion detection environment to monitor network traffic, d
 - **VM-3** - ELK stack (Elasticsearch + Kibana)
 - **Pipeline:** Suricata detects → Filebeat ships logs → Elasticsearch indexes → Kibana visualizes
 
+- ```mermaid
+flowchart LR
+    subgraph VM2["VM-2 - Traffic Generator"]
+        A["Nmap scans<br/>hping3 SYN flood<br/>normal traffic (ping, SSH)"]
+    end
+
+    subgraph VM1["VM-1 - Monitored Target"]
+        S["Suricata IDS<br/>custom detection rules"]
+        F["Filebeat"]
+        S --> F
+    end
+
+    subgraph VM3["VM-3 - ELK Stack"]
+        E[("Elasticsearch")]
+        K["Kibana Dashboards"]
+        E --> K
+    end
+
+    A -->|network traffic| S
+    F -->|ship logs eve.json| E
+```
+
 ## What I did
 - Deployed and configured **Suricata** as the IDS engine on Ubuntu VMs
 - Wrote **custom detection rules** for reconnaissance and denial-of-service patterns (Nmap SYN scans, ICMP host discovery, and high- and moderate-rate SYN floods)
